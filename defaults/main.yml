@@ -2,6 +2,7 @@
 # defaults file for wildfly
 
 wildfly_version: 9.0.1.Final
+wildfly_java_install_package: java-1.8.0-openjdk-headless
 
 wildfly_user: wildfly
 wildfly_group: wildfly
@@ -11,6 +12,7 @@ wildfly_name: wildfly-{{ wildfly_version }}
 wildfly_download_file: "{{ wildfly_name }}.tar.gz"
 wildfly_download_url: "{{ wildfly_base_download_url }}/{{ wildfly_version }}/\
                        {{ wildfly_download_file }}"
+
 wildfly_download_dir: /tmp
 
 wildfly_install_dir: /opt
