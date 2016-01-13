@@ -4,6 +4,9 @@
 - name: Install OpenJDK
   yum: name={{ wildfly_java_install_package }} state=present
 
+- name: install firewalld
+  yum: name=firewalld state=present
+  
 - name: Check if wildfly version file exists
   stat: path={{ wildfly_version_file }}
   register: wildfly_version_file_st
