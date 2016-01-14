@@ -39,7 +39,7 @@
     group={{ wildfly_group }}
     home={{ wildfly_home }}
     createhome={{ wildfly_createhome }}
-    movehome={{ wildfly_movehome }}
+    move_home={{ wildfly_movehome }}
     state=present
 
 - name: Unarchive downloaded file
