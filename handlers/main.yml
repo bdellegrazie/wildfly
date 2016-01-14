@@ -7,3 +7,7 @@
 - name: change standalone data mode
   file: path={{ wildfly_dir }}/standalone/data owner={{ wildfly_user }}
         group={{ wildfly_group }} mode=0750 recurse=yes
+
+- name: reload systemd
+  sudo: yes
+  command: systemctl daemon-reload        

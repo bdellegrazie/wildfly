@@ -21,31 +21,41 @@
     - change standalone data mode
 
 - name: Copy wildfly init script
-  template: src=wildfly.j2 dest={{ wildfly_init_dir }}/wildfly owner=root
+  template: src=wildfly_initd.j2 dest={{ wildfly_init_dir }}/wildfly owner=root
             group=root mode=0750
   notify:
     - restart wildfly
     - change standalone data mode
+  when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int < 7
+
+- name: Copy wildfly systemd unit file
+  template: src=wildfly_systemd.j2 dest=/lib/systemd/system/wildfly owner=root
+            group=root mode=0750
+  notify:
+    - reload systemd
+    - restart wildfly
+    - change standalone data mode
+  when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int >= 7
 
 - name: Open wildfly management tcp port
   firewalld: port={{ wildfly_manage_port }}/tcp permanent=true immediate=true
              state=enabled
-  when wildfly_use_firewalld==true
+  when: wildfly_use_firewalld
 
 - name: Open wildfly management udp port
   firewalld: port={{ wildfly_manage_port }}/udp permanent=true immediate=true
              state=enabled
-  when wildfly_use_firewalld==true
+  when: wildfly_use_firewalld
 
 - name: Open wildfly http tcp port
   firewalld: port={{ wildfly_http_port }}/tcp permanent=true immediate=true
              state=enabled
-  when wildfly_use_firewalld==true
+  when: wildfly_use_firewalld
 
 - name: Open wildfly http udp port
   firewalld: port={{ wildfly_http_port }}/udp permanent=true immediate=true
              state=enabled
-  when wildfly_use_firewalld==true             
+  when: wildfly_use_firewalld
 
 - name: Enable and start the service
   service: name=wildfly enabled=yes state=started
