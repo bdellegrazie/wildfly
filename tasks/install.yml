@@ -27,7 +27,7 @@
 - name: Create wildfly install directory
   file:
     path={{ wildfly_install_dir }}
-    mode=0644
+    mode=0755
     state=directory
   when: wildfly_installed.stdout is not defined or not wildfly_installed.stdout
 
