@@ -10,4 +10,5 @@
         group={{ wildfly_group }} mode=0750 recurse=yes
 
 - name: reload systemd
-  command: systemctl daemon-reload        
+  command: systemctl daemon-reload
+  when: wildfly_start_service        
