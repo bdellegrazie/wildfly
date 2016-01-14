@@ -23,6 +23,15 @@
   get_url: dest={{ wildfly_download_dir }} url={{ wildfly_download_url }}
   when: wildfly_installed.stdout is not defined or not wildfly_installed.stdout
 
+- name: Create wildfly install directory
+  file:
+    path={{ wildfly_install_dir }}
+    owner={{ wildfly_user }}
+    group={{ wildfly_group }}
+    mode=0644
+    state=directory
+  when: wildfly_installed.stdout is not defined or not wildfly_installed.stdout
+
 - name: Create wildfly group
   group: name={{ wildfly_group }} state=present
 
@@ -34,15 +43,6 @@
     createhome={{ wildfly_createhome }}
     movehome={{ wildfly_movehome }}
     state=present
-
-- name: Create wildfly install directory
-  file:
-    path={{ wildfly_install_dir }}
-    owner={{ wildfly_user }}
-    group={{ wildfly_group }}
-    mode=0644
-    state=directory
-  when: wildfly_installed.stdout is not defined or not wildfly_installed.stdout
 
 - name: Unarchive downloaded file
   unarchive: src={{ wildfly_download_dir }}/{{ wildfly_download_file }}
