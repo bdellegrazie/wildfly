@@ -26,8 +26,6 @@
 - name: Create wildfly install directory
   file:
     path={{ wildfly_install_dir }}
-    owner={{ wildfly_user }}
-    group={{ wildfly_group }}
     mode=0644
     state=directory
   when: wildfly_installed.stdout is not defined or not wildfly_installed.stdout
