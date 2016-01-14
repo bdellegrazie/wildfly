@@ -25,12 +25,15 @@
 
 - name: Create wildfly group
   group: name={{ wildfly_group }} state=present
-  when: wildfly_installed.stdout is not defined or not wildfly_installed.stdout
 
 - name: Create wildfly user
-  user: name={{ wildfly_user }} group={{ wildfly_group }} createhome=no
-        state=present
-  when: wildfly_installed.stdout is not defined or not wildfly_installed.stdout
+  user: 
+  - name={{ wildfly_user }}
+  - group={{ wildfly_group }}
+  - home={{ wildfly_home }}
+  - createhome={{ wildfly_createhome }}
+  - movehome={{ wildfly_movehome }}
+  - state=present
 
 - name: Unarchive downloaded file
   unarchive: src={{ wildfly_download_dir }}/{{ wildfly_download_file }}
