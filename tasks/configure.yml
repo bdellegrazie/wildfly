@@ -12,6 +12,16 @@
     - restart wildfly
     - change standalone data mode
 
+- name: Make link from for wildfly configuration in /etc/default
+  file:
+    path=/etc/default/wildfly.conf
+    owner=root
+    group=root
+    mode=644
+    src={{ wildfly_conf_dir }}/wildfly.conf
+    state=link
+  when: wildfly_conf_dir != "/etc/defaults" or wildfly_conf_dir != "/etc/defaults/"
+
 - name: Copy wildfly properties file
   template: src=wildfly.properties.j2 owner={{ wildfly_user }}
             group={{ wildfly_group }} mode=0640
@@ -26,7 +36,7 @@
   notify:
     - restart wildfly
     - change standalone data mode
-  when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int < 7
+  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version|int < 7)
 
 - name: Copy wildfly systemd unit file
   template: src=wildfly_systemd.j2 dest=/lib/systemd/system/wildfly owner=root
@@ -35,7 +45,7 @@
     - reload systemd
     - restart wildfly
     - change standalone data mode
-  when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int >= 7
+  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
 
 - name: Open wildfly management tcp port
   firewalld: port={{ wildfly_manage_port }}/tcp permanent=true immediate=true
@@ -57,12 +67,17 @@
              state=enabled
   when: wildfly_use_firewalld
 
-- name: Enable and start the service
+- name: Enable and start the service (not in docker)
   service: name=wildfly enabled=yes state=started
+  when: wildfly_start_service
+
+- name: Start wildfly without service
+  command: "{{ wildfly_dir }}/bin/init.d/wildfly-init-redhat.sh restart"
+  when: not wildfly_start_service
 
 - name: Change standalone data mode
   file: path={{ wildfly_dir }}/standalone/data mode=0750 recurse=yes
-        owner={{ wildfly_user }} group={{ wildfly_group }}
+        owner={{ wildfly_user }} group={{ wildfly_group }} state=directory
 
 - name: Delete wildfly tar file
   file: path={{ wildfly_download_dir }}/{{ wildfly_download_file }}
