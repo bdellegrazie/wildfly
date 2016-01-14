@@ -3,11 +3,15 @@
 
 - name: restart wildfly
   service: name=wildfly state=restarted
+  when: wildfly_start_service
+
+- name: restart wildfly
+  command: "{{ wildfly_dir }}/bin/init.d/wildfly-init-redhat.sh restart"
+  when: not wildfly_start_service
 
 - name: change standalone data mode
   file: path={{ wildfly_dir }}/standalone/data owner={{ wildfly_user }}
         group={{ wildfly_group }} mode=0750 recurse=yes
 
 - name: reload systemd
-  sudo: yes
   command: systemctl daemon-reload        
