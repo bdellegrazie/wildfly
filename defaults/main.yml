@@ -18,6 +18,7 @@ wildfly_download_dir: /tmp
 wildfly_install_dir: /opt
 wildfly_dir: "{{ wildfly_install_dir }}/{{ wildfly_name }}"
 wildfly_version_file: "{{ wildfly_dir }}/version"
+wildfly_logical_dir: "{{ wildfly_dir }}"
 
 wildfly_home: "{{ wildfly_dir }}"
 wildfly_createhome: false
