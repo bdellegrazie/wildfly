@@ -7,7 +7,10 @@
 - name: install firewalld
   yum: name=firewalld state=present
   when: wildfly_use_firewalld
-  
+
+- name: install initscripts
+  yum: name=initscripts state=present
+
 - name: Check if wildfly version file exists
   stat: path={{ wildfly_version_file }}
   register: wildfly_version_file_st
