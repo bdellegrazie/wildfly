@@ -1,4 +1,9 @@
 # System properties for wildfly
 jboss.bind.address={{ wildfly_bind_address }}
 jboss.bind.address.management={{ wildfly_management_bind_address }}
-jboss.server.temp.dir=/tmp/wildfly
+jboss.server.base.dir={{ wildfly_logical_base_dir }}
+jboss.server.config.dir={{ wildfly_logical_config_dir }}
+jboss.server.data.dir={{ wildfly_logical_data_dir }}
+jboss.server.log.dir={{ wildfly_logical_log_dir }}
+jboss.server.temp.dir={{ wildfly_logical_temp_dir }}
+jboss.server.deploy.dir={{ wildfly_logical_deploy_dir }}

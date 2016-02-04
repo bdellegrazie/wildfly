@@ -18,7 +18,15 @@ wildfly_download_dir: /tmp
 wildfly_install_dir: /opt
 wildfly_dir: "{{ wildfly_install_dir }}/{{ wildfly_name }}"
 wildfly_version_file: "{{ wildfly_dir }}/version"
+# jboss.home.dir
 wildfly_logical_dir: "{{ wildfly_dir }}"
+# jboss.server.base.dir
+wildfly_logical_base_dir: "{{ wildfly_logical_dir }}/standalone"
+wildfly_logical_config_dir: "{{ wildfly_logical_base_dir }}/configuration"
+wildfly_logical_data_dir: "{{ wildfly_logical_base_dir }}/data"
+wildfly_logical_log_dir: "{{ wildfly_logical_base_dir }}/log"
+wildfly_logical_temp_dir: "{{ wildfly_download_dir }}/wildfly"
+wildfly_logical_deploy_dir: "{{ wildfly_logical_data_dir }}/content"
 
 wildfly_home: "{{ wildfly_dir }}"
 wildfly_createhome: false
@@ -30,7 +38,7 @@ wildfly_console_log: "{{ wildfly_console_log_dir }}/\
 
 wildfly_conf_dir: /etc/wildfly
 wildfly_standalone_config_file: standalone.xml
-wildfly_standalone_config_path: "{{ wildfly_dir }}/standalone/configuration/\
+wildfly_standalone_config_path: "{{ wildfly_logical_config_dir }}/\
                                  {{ wildfly_standalone_config_file }}"
 wildfly_init_dir: /etc/init.d
 wildfly_start_service: true
