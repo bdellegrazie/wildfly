@@ -36,6 +36,7 @@ wildfly_init_dir: /etc/init.d
 wildfly_start_service: true
 wildfly_start_wait: 30
 wildfly_stop_wait: 30
+wildfly_debug_enable: false
 
 wildfly_bind_address: 0.0.0.0
 wildfly_management_bind_address: 0.0.0.0
