@@ -3,7 +3,7 @@
 
 - name: restart wildfly
   service: name=wildfly state=restarted
-  when: wildfly_start_service
+  when: wildfly_service_manage
 
 - name: change standalone data mode
   file: path={{ wildfly_dir }}/standalone/data owner={{ wildfly_user }}
@@ -11,4 +11,4 @@
 
 - name: reload systemd
   command: systemctl daemon-reload
-  when: wildfly_start_service        
+  when: wildfly_service_manage       

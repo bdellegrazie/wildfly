@@ -33,7 +33,8 @@ wildfly_standalone_config_file: standalone.xml
 wildfly_standalone_config_path: "{{ wildfly_dir }}/standalone/configuration/\
                                  {{ wildfly_standalone_config_file }}"
 wildfly_init_dir: /etc/init.d
-wildfly_start_service: true
+wildfly_service_manage: true
+wildfly_service_enable: true
 wildfly_start_wait: 30
 wildfly_stop_wait: 30
 wildfly_debug_enable: false

@@ -75,17 +75,16 @@
              state=enabled
   when: wildfly_use_firewalld
 
-- name: Enable and start the service (not in docker)
-  service: name=wildfly enabled=yes state=started
-  when: wildfly_start_service
-
-- name: Start wildfly without service
-  service: name=wildfly state=started
-  when: not wildfly_start_service
+- name: Manage the service (not in docker)
+  service: name=wildfly enabled={{ wildfly_service_enable }}
+  when: wildfly_service_manage
 
 - name: Change standalone data mode
   file: path={{ wildfly_dir }}/standalone/data mode=0750 recurse=yes
         owner={{ wildfly_user }} group={{ wildfly_group }} state=directory
+
+- name: Start wildfly
+  service: name=wildfly state=started
 
 - name: Delete wildfly tar file
   file: path={{ wildfly_download_dir }}/{{ wildfly_download_file }}
