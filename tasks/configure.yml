@@ -30,6 +30,14 @@
     - restart wildfly
     - change standalone data mode
 
+- name: Copy wildfly standalone config file
+  template: src=standalone.conf.j2 owner={{ wildfly_user }}
+            group={{ wildfly_group }} mode=0640
+            dest={{ wildfly_dir }}/bin/standalone.conf
+  notify:
+    - restart wildfly
+    - change standalone data mode
+
 - name: Copy wildfly init script
   template: src=wildfly_initd.j2 dest={{ wildfly_init_dir }}/wildfly owner=root
             group=root mode=0750
@@ -72,7 +80,7 @@
   when: wildfly_start_service
 
 - name: Start wildfly without service
-  command: "{{ wildfly_dir }}/bin/init.d/wildfly-init-redhat.sh restart"
+  service: name=wildfly state=started
   when: not wildfly_start_service
 
 - name: Change standalone data mode
