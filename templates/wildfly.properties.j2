@@ -2,3 +2,6 @@
 jboss.bind.address={{ wildfly_bind_address }}
 jboss.bind.address.management={{ wildfly_management_bind_address }}
 jboss.server.temp.dir=/tmp/wildfly
+{% for KEY,VALUE in wildfly_service_properties|default({})|dictsort %}
+{{ KEY }}={{ VALUE }}
+{% endfor %}
