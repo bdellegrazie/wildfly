@@ -17,7 +17,6 @@
     path=/etc/default/wildfly.conf
     owner=root
     group=root
-    mode=644
     src={{ wildfly_conf_dir }}/wildfly.conf
     state=link
   when: wildfly_conf_dir != "/etc/defaults" or wildfly_conf_dir != "/etc/defaults/"

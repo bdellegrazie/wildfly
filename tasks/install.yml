@@ -38,7 +38,7 @@
   group: name={{ wildfly_group }} state=present
 
 - name: Create wildfly user
-  user: 
+  user:
     name={{ wildfly_user }}
     group={{ wildfly_group }}
     home={{ wildfly_home }}
